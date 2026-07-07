@@ -30,7 +30,7 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// authentication related routes
+// authentication routes
 app.use("/api/auth", authRoutes);
 
 // Global Error Handler

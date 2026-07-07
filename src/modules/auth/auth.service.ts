@@ -1,7 +1,10 @@
+import { StringValue } from "ms";
 import { User } from "../../../generated/prisma/client";
 import { config } from "../../config";
 import { prisma } from "../../lib/prisma";
 import bcrypt from "bcrypt";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { createToken } from "../../utils/createToken";
 
 const registerUser = async (
   payload: Pick<User, "name" | "email" | "password" | "role">,
@@ -25,4 +28,47 @@ const registerUser = async (
   return user;
 };
 
-export const authService = { registerUser };
+const loginUserIntoDB = async (payload: Pick<User, "email" | "password">) => {
+  const { email, password } = payload;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User Not Found");
+  }
+
+  // verify password
+  const verifyPassword = await bcrypt.compare(password, user.password);
+  if (!verifyPassword) {
+    throw new Error("Invalid Password");
+  }
+
+  const userPayload = {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    isActive: user.isActive,
+  } as JwtPayload;
+
+  // create access token
+  const accessToken = createToken(
+    userPayload,
+    config.access_token,
+    config.access_token_expire as StringValue,
+  );
+
+  // create refresh token
+  const refreshToken = createToken(
+    userPayload,
+    config.refresh_token,
+    config.refresh_token_expire as StringValue,
+  );
+
+  return { accessToken, refreshToken };
+};
+
+export const authService = { registerUser, loginUserIntoDB };
