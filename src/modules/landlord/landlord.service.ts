@@ -7,9 +7,27 @@ const createProperty = async (landlordId: string, payload: Property) => {
       ...payload,
       landlordId,
     },
+    include: {
+      category: {
+        omit: {
+          createdAt: true,
+          updatedAt: true,
+          id: true,
+        },
+      },
+    },
   });
+  return property;
 };
-const updateProperty = async () => {};
+const updateProperty = async (propertyId: string, payload: Property) => {
+  const property = await prisma.property.update({
+    where: {
+      id: propertyId,
+    },
+    data: payload,
+  });
+  return property;
+};
 const deleteProperty = async () => {};
 const allRentalRequest = async () => {};
 const updateRequestByLandlord = async () => {};
