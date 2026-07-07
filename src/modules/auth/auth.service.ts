@@ -104,8 +104,22 @@ const createAccessTokenUsingRefreshToken = async (refreshToken: string) => {
   return { accessToken };
 };
 
+const currentUser = async (id: string) => {
+  const data = await prisma.user.findUniqueOrThrow({
+    where: {
+      id,
+    },
+    omit: {
+      password: true,
+    },
+  });
+
+  return data;
+};
+
 export const authService = {
   registerUser,
   loginUserIntoDB,
   createAccessTokenUsingRefreshToken,
+  currentUser,
 };

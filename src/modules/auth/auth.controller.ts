@@ -74,4 +74,21 @@ const refreshToken = catchAsync(
   },
 );
 
-export const authController = { registerUser, logInUser, refreshToken };
+const currentUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = await authService.currentUser(req?.user.id);
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "current user data",
+      data: user,
+    });
+  },
+);
+
+export const authController = {
+  registerUser,
+  logInUser,
+  refreshToken,
+  currentUser,
+};
