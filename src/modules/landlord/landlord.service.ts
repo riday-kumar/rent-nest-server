@@ -19,16 +19,57 @@ const createProperty = async (landlordId: string, payload: Property) => {
   });
   return property;
 };
-const updateProperty = async (propertyId: string, payload: Property) => {
-  const property = await prisma.property.update({
+const updateProperty = async (
+  propertyId: string,
+  payload: Property,
+  userId: string,
+) => {
+  // find property
+  const findProperty = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+  });
+
+  if (!findProperty) {
+    throw new Error("Property not found");
+  }
+
+  if (findProperty?.landlordId !== userId) {
+    throw new Error("You are not the landlord of this property");
+  }
+
+  const updateProperty = await prisma.property.update({
     where: {
       id: propertyId,
     },
     data: payload,
   });
-  return property;
+  return updateProperty;
 };
-const deleteProperty = async () => {};
+const deleteProperty = async (propertyId: string, userId: string) => {
+  // find property
+  const findProperty = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+  });
+
+  if (!findProperty) {
+    throw new Error("Property not found");
+  }
+
+  if (findProperty?.landlordId !== userId) {
+    throw new Error("You are not the landlord of this property");
+  }
+
+  const deleteProperty = await prisma.property.delete({
+    where: {
+      id: propertyId,
+    },
+  });
+  return deleteProperty;
+};
 const allRentalRequest = async () => {};
 const updateRequestByLandlord = async () => {};
 
