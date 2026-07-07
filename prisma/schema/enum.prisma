@@ -3,3 +3,15 @@ enum ROLE {
     LANDLORD
     TENANT
 }
+
+enum RentRequestStatus {
+    PENDING
+    APPROVED
+    REJECTED
+}
+
+enum PropertyStatus {
+    AVAILABLE
+    RENTED
+    UNAVAILABLE
+}

@@ -1,10 +1,16 @@
 model User {
     id        String   @id @default(ulid())
-    name      String?
+    name      String
     email     String   @unique
     password  String   @db.Text
     role      ROLE     @default(TENANT)
     isActive  Boolean  @default(true)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    properties  Property[]
+    rentRequest RentRequest[]
+    review      Review[]
+
+    @@map("users")
 }

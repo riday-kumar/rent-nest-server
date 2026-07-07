@@ -1,0 +1,43 @@
+model Property {
+    id          String   @id @default(uuid())
+    title       String
+    description String?
+    rentAmount  Decimal?
+    address     String
+    city        String
+    division    String?
+
+    propertyStatus PropertyStatus @default(AVAILABLE)
+
+    size        Int
+    floorType   String?
+    bedRoom     Int?
+    bathroom    Int?
+    balconies   Int?
+    livingRoom  Boolean @default(false)
+    drawingRoom Boolean @default(false)
+    dinningRoom Boolean @default(false)
+    kitchen     Int?
+    servantRoom Boolean @default(false)
+
+    parking       Boolean  @default(false)
+    lift          Boolean  @default(false)
+    serviceCharge Decimal?
+
+    images String[]
+
+    amenities String[]
+
+    categoryId Int
+    landlordId String
+
+    category     Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    landlord     User          @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+    review       Review[]
+    rentRequests RentRequest[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("properties")
+}
