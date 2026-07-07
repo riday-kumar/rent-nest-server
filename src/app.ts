@@ -7,6 +7,8 @@ import express, {
 import cors from "cors";
 import { config } from "./config";
 import httpStatus from "http-status";
+import { authRoutes } from "./modules/auth/auth.route";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
 const app: Application = express();
 // middleware
@@ -27,5 +29,11 @@ app.get("/", (req: Request, res: Response) => {
     message: "Hello World!",
   });
 });
+
+// authentication related routes
+app.use("/api/auth", authRoutes);
+
+// Global Error Handler
+app.use(globalErrorHandler);
 
 export default app;
