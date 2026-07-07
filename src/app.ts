@@ -11,6 +11,7 @@ import { authRoutes } from "./modules/auth/auth.route";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 import { landlordRoute } from "./modules/landlord/landlord.route";
 import { categoryRoute } from "./modules/category/category.route";
+import { adminRoutes } from "./modules/admin/admin.route";
 
 const app: Application = express();
 // middleware
@@ -38,6 +39,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoute);
 // landlord routes
 app.use("/api/landlord", landlordRoute);
+// admin routes
+app.use("/api/admin", adminRoutes);
 
 // Global Error Handler
 app.use(globalErrorHandler);
