@@ -9,6 +9,8 @@ import { config } from "./config";
 import httpStatus from "http-status";
 import { authRoutes } from "./modules/auth/auth.route";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
+import { landlordRoute } from "./modules/landlord/landlord.route";
+import { categoryRoute } from "./modules/category/category.route";
 
 const app: Application = express();
 // middleware
@@ -32,6 +34,10 @@ app.get("/", (req: Request, res: Response) => {
 
 // authentication routes
 app.use("/api/auth", authRoutes);
+// category routes
+app.use("/api/category", categoryRoute);
+// landlord routes
+app.use("/api/landlord", landlordRoute);
 
 // Global Error Handler
 app.use(globalErrorHandler);
