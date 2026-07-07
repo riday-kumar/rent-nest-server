@@ -7,6 +7,7 @@ dotenv.config({ path: envPath });
 
 export const config = {
   app_url: process.env.APP_URL,
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 5000,
   database_url: process.env.DATABASE_URL,
+  salt_round: process.env.SALT_ROUND!,
 };
