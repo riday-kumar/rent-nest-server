@@ -48,4 +48,30 @@ const logInUser = catchAsync(
     });
   },
 );
-export const authController = { registerUser, logInUser };
+
+const refreshToken = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const getRefreshToken = req.cookies.refreshToken;
+
+    const { accessToken } =
+      await authService.createAccessTokenUsingRefreshToken(getRefreshToken);
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+
+    sendResponse(res, {
+      success: true,
+      statusCode: status.CREATED,
+      message: "Access Token Created",
+      data: {
+        accessToken,
+      },
+    });
+  },
+);
+
+export const authController = { registerUser, logInUser, refreshToken };

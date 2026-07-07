@@ -67,8 +67,45 @@ const loginUserIntoDB = async (payload: Pick<User, "email" | "password">) => {
     config.refresh_token,
     config.refresh_token_expire as StringValue,
   );
-
   return { accessToken, refreshToken };
 };
 
-export const authService = { registerUser, loginUserIntoDB };
+const createAccessTokenUsingRefreshToken = async (refreshToken: string) => {
+  const verifyToken = jwt.verify(
+    refreshToken,
+    config.refresh_token,
+  ) as JwtPayload;
+  const { id, email, isActive } = verifyToken;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!user || !user.isActive) {
+    throw new Error("user not found or user is not active");
+  }
+
+  const userPayload = {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    isActive: user.isActive,
+  } as JwtPayload;
+
+  // create access token
+  const accessToken = createToken(
+    userPayload,
+    config.access_token,
+    config.access_token_expire as StringValue,
+  );
+
+  return { accessToken };
+};
+
+export const authService = {
+  registerUser,
+  loginUserIntoDB,
+  createAccessTokenUsingRefreshToken,
+};
