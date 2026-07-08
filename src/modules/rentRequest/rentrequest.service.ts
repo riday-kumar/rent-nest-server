@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma";
-import { IRentRequest } from "./rentrequest.interface";
+import { IRentRequest, IRequestDetail } from "./rentrequest.interface";
 
 const createRentRequest = async (payload: IRentRequest) => {
   // check already tenant has a request for this property
@@ -9,7 +9,7 @@ const createRentRequest = async (payload: IRentRequest) => {
     },
   });
   if (existingRequest) {
-    throw new Error("Tenant already has a request for this property", 400);
+    throw new Error("Tenant already has a request for this property");
   }
 
   // now create request
@@ -20,8 +20,39 @@ const createRentRequest = async (payload: IRentRequest) => {
   });
   return rentRequest;
 };
-const getAllRentRequests = async () => {};
-const getRentRequestDetail = async () => {};
+const getAllRentRequests = async (tenantId: string) => {
+  const allRequests = await prisma.rentRequest.findMany({
+    where: {
+      tenantId,
+    },
+  });
+
+  if (allRequests.length === 0) {
+    throw new Error("No rent requests found");
+  }
+
+  return allRequests;
+};
+const getRentRequestDetail = async (payload: IRequestDetail) => {
+  const request = await prisma.rentRequest.findFirst({
+    where: {
+      id: payload.requestId,
+      tenantId: payload.tenantId,
+    },
+    include: {
+      property: {
+        omit: {
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
+  });
+  if (!request) {
+    throw new Error("Rent request not found");
+  }
+  return request;
+};
 
 export const rentRequestService = {
   createRentRequest,
