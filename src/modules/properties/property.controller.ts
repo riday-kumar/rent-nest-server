@@ -26,7 +26,17 @@ const getAllProperties = catchAsync(
 );
 
 const getPropertyDetail = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const property = await propertyService.propertyDetail(id as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "Property retrieved successfully",
+      data: property,
+    });
+  },
 );
 
 export const propertyController = { getAllProperties, getPropertyDetail };
