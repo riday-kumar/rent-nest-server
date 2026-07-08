@@ -1,4 +1,8 @@
-import { Property, ROLE } from "../../../generated/prisma/client";
+import {
+  Property,
+  RentRequestStatus,
+  ROLE,
+} from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const createProperty = async (landlordId: string, payload: Property) => {
@@ -78,7 +82,12 @@ const allRentalRequest = async (landlordId: string) => {
       },
     },
     include: {
-      tenant: true,
+      tenant: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
       property: true,
     },
   });
@@ -89,7 +98,67 @@ const allRentalRequest = async (landlordId: string) => {
 
   return allRentalRequests;
 };
-const updateRequestByLandlord = async () => {};
+const updateRequestByLandlord = async (
+  reqId: string,
+  status: RentRequestStatus,
+  userId: string,
+) => {
+  const findRequest = await prisma.rentRequest.findUnique({
+    where: {
+      id: reqId,
+    },
+  });
+
+  if (!findRequest || findRequest.rentStatus !== "PENDING") {
+    throw new Error("Rental request not found or not pending");
+  }
+
+  const findProperty = await prisma.property.findUniqueOrThrow({
+    where: {
+      id: findRequest.propertyId,
+    },
+  });
+
+  if (findProperty?.landlordId !== userId) {
+    throw new Error("You are not the landlord of this property");
+  }
+
+  if (status !== "APPROVED" && status !== "REJECTED") {
+    throw new Error("Invalid status");
+  }
+
+  const updateTransaction = await prisma.$transaction(async (tx) => {
+    // approve or reject current req
+    await tx.rentRequest.update({
+      where: {
+        id: reqId,
+      },
+      data: {
+        rentStatus: status,
+      },
+    });
+
+    if (status === "APPROVED") {
+      // reject all pending requests in the same property
+      await tx.rentRequest.updateMany({
+        where: {
+          NOT: {
+            id: reqId,
+          },
+          AND: {
+            propertyId: findRequest.propertyId,
+            rentStatus: "PENDING",
+          },
+        },
+        data: {
+          rentStatus: "REJECTED",
+        },
+      });
+    }
+  });
+
+  return updateTransaction;
+};
 
 export const landlordService = {
   createProperty,

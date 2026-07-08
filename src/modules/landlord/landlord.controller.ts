@@ -3,6 +3,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { landlordService } from "./landlord.service";
 import status from "http-status";
 import { sendResponse } from "../../utils/sendResponse";
+import { RentRequestStatus } from "../../../generated/prisma/enums";
 
 const createProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -68,7 +69,23 @@ const allRentalRequest = catchAsync(
 );
 
 const updateRequestByLandlord = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const reqId = req.params.id;
+    const statusMsg = req.body.status;
+    const userId = req.user.id;
+    const updateStatus = await landlordService.updateRequestByLandlord(
+      reqId as string,
+      statusMsg as RentRequestStatus,
+      userId,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "Rental request status updated successfully",
+      data: updateStatus,
+    });
+  },
 );
 
 export const landlordController = {
