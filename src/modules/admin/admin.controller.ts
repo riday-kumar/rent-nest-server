@@ -19,7 +19,15 @@ const getAllProperties = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {},
 );
 const getAllRentals = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const allRentalRequests = await adminService.getAllRentalsReq();
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "All Rental Requests retrieved successfully",
+      data: allRentalRequests,
+    });
+  },
 );
 const updateUserStatus = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
