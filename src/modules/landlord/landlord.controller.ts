@@ -53,7 +53,18 @@ const deleteProperty = catchAsync(
 );
 
 const allRentalRequest = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const landlordId = req?.user?.id;
+    const allRentalRequests = await landlordService.allRentalRequest(
+      landlordId as string,
+    );
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "All rental requests retrieved successfully",
+      data: allRentalRequests,
+    });
+  },
 );
 
 const updateRequestByLandlord = catchAsync(

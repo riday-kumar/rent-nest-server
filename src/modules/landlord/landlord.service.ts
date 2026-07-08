@@ -70,7 +70,25 @@ const deleteProperty = async (propertyId: string, userId: string) => {
   });
   return deleteProperty;
 };
-const allRentalRequest = async () => {};
+const allRentalRequest = async (landlordId: string) => {
+  const allRentalRequests = await prisma.rentRequest.findMany({
+    where: {
+      property: {
+        landlordId,
+      },
+    },
+    include: {
+      tenant: true,
+      property: true,
+    },
+  });
+
+  if (allRentalRequests.length === 0) {
+    throw new Error("No rental request found");
+  }
+
+  return allRentalRequests;
+};
 const updateRequestByLandlord = async () => {};
 
 export const landlordService = {
