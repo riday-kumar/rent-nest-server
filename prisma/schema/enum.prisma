@@ -15,3 +15,10 @@ enum PropertyStatus {
     RENTED
     UNAVAILABLE
 }
+
+enum PaymentStatus {
+    PENDING
+    PAID
+    FAILED
+    CANCELLED
+}

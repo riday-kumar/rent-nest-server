@@ -14,4 +14,9 @@ export const config = {
   refresh_token: process.env.REFRESH_TOKEN!,
   access_token_expire: process.env.ACCESS_TOKEN_EXPIRES!,
   refresh_token_expire: process.env.REFRESH_TOKEN_EXPIRES!,
+  ssl_commerze_store_id: process.env.SSL_COMMERZE_STORE_ID!,
+  ssl_commerze_store_password: process.env.SSL_COMMERZE_STORE_PASSWORD!,
+  ssl_commerze_success_url: process.env.SSL_COMMERZE_SUCCESS_URL!,
+  ssl_commerze_fail_url: process.env.SSL_COMMERZE_FAIL_URL!,
+  ssl_commerze_cancel_url: process.env.SSL_COMMERZE_CANCEL_URL!,
 };

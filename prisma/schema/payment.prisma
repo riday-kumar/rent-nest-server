@@ -1,16 +1,21 @@
 model Payment {
-    id            String  @id @default(uuid())
-    transactionId String
-    amount        Decimal
-    status        String
+    id            String @id @default(uuid())
+    rentRequestId String @unique
+    transactionId String @unique
 
-    method   String?
-    currency String?
+    amount Decimal
+    status PaymentStatus @default(PENDING)
 
-    rentRequestId String      @unique
-    rentRequest   RentRequest @relation(fields: [rentRequestId], references: [id], onDelete: Cascade)
+    // method   String?
+    // currency String?
+
+    // payment details
+    meta Json?
+
+    rentRequest RentRequest @relation(fields: [rentRequestId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@map("payments")
 }

@@ -14,6 +14,7 @@ import { categoryRoute } from "./modules/category/category.route";
 import { adminRoutes } from "./modules/admin/admin.route";
 import { propertyRoute } from "./modules/properties/property.route";
 import { rentRequestRoute } from "./modules/rentRequest/rentrequest.route";
+import { paymentRoute } from "./modules/payments/payments.route";
 
 const app: Application = express();
 // middleware
@@ -47,6 +48,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/properties", propertyRoute);
 // rent request routes
 app.use("/api/rentals", rentRequestRoute);
+// payment routes
+app.use("/api/payments", paymentRoute);
 // Global Error Handler
 app.use(globalErrorHandler);
 

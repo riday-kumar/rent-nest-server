@@ -2,6 +2,17 @@ import { prisma } from "../../lib/prisma";
 import { IRentRequest, IRequestDetail } from "./rentrequest.interface";
 
 const createRentRequest = async (payload: IRentRequest) => {
+  // check property is available or not
+  const currentProperty = await prisma.property.findUnique({
+    where: {
+      id: payload.propertyId,
+    },
+  });
+
+  if (currentProperty?.propertyStatus !== "AVAILABLE") {
+    throw new Error("Property is not available");
+  }
+
   // check already tenant has a request for this property
   const existingRequest = await prisma.rentRequest.findFirst({
     where: {

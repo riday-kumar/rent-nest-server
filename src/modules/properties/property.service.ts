@@ -39,6 +39,7 @@ const allProperties = async (location: string, price: number, type: number) => {
   const properties = await prisma.property.findMany({
     where: {
       AND: andCondition,
+      propertyStatus: "AVAILABLE",
     },
     include: {
       category: {
