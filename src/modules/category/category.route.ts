@@ -3,7 +3,7 @@ import { categoryController } from "./category.controller";
 import { auth } from "../../middlewares/auth";
 
 const route = Router();
-route.get("/all-categories", auth(), categoryController.getAllCategories);
+route.get("/all-categories", categoryController.getAllCategories);
 route.post(
   "/create-category",
   auth("ADMIN"),

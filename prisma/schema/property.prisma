@@ -3,9 +3,11 @@ model Property {
     title       String
     description String?
     rentAmount  Decimal?
-    address     String
-    city        String
-    division    String?
+
+    address  String
+    city     String
+    district String
+    division String?
 
     propertyStatus PropertyStatus @default(AVAILABLE)
 

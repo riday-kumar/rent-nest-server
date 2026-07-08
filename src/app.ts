@@ -12,6 +12,7 @@ import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 import { landlordRoute } from "./modules/landlord/landlord.route";
 import { categoryRoute } from "./modules/category/category.route";
 import { adminRoutes } from "./modules/admin/admin.route";
+import { propertyRoute } from "./modules/properties/property.route";
 
 const app: Application = express();
 // middleware
@@ -41,6 +42,8 @@ app.use("/api/category", categoryRoute);
 app.use("/api/landlord", landlordRoute);
 // admin routes
 app.use("/api/admin", adminRoutes);
+// property routes(Public)
+app.use("/api/properties", propertyRoute);
 
 // Global Error Handler
 app.use(globalErrorHandler);
