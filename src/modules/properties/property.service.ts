@@ -83,7 +83,23 @@ const allProperties = async (query: IPropQuery) => {
   if (properties.length === 0) {
     throw new Error("Property is not available");
   }
-  return properties;
+
+  const totalPropertiesCount = await prisma.property.count({
+    where: {
+      AND: andCondition,
+      // propertyStatus: "AVAILABLE",
+    },
+  });
+
+  return {
+    data: properties,
+    meta: {
+      total: totalPropertiesCount,
+      limit: contentLimit,
+      page: pageNo,
+      totalPages: Math.ceil(totalPropertiesCount / contentLimit),
+    },
+  };
 };
 const propertyDetail = async (id: string) => {
   const property = await prisma.property.findUnique({

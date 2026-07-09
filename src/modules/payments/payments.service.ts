@@ -179,7 +179,23 @@ const paymentHistory = async (query: PaginationOptions, userId: string) => {
     throw new Error("No payment history found");
   }
 
-  return paymentHistory;
+  const totalPaymentHistoryCount = await prisma.payment.count({
+    where: {
+      rentRequest: {
+        tenantId: userId,
+      },
+    },
+  });
+
+  return {
+    data: paymentHistory,
+    meta: {
+      total: totalPaymentHistoryCount,
+      limit: contentLimit,
+      page: pageNo,
+      totalPages: Math.ceil(totalPaymentHistoryCount / contentLimit),
+    },
+  };
 };
 const getPaymentDetail = async (paymentId: string, userId: string) => {
   const paymentDetails = await prisma.payment.findUnique({

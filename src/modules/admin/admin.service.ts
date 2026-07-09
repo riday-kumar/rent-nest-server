@@ -22,7 +22,18 @@ const getAllUsers = async (query: PaginationOptions) => {
       [sortedBy]: sortedOrder,
     },
   });
-  return users;
+
+  const totalUsersCount = await prisma.user.count();
+
+  return {
+    data: users,
+    meta: {
+      total: totalUsersCount,
+      limit: contentLimit,
+      page: pageNo,
+      totalPages: Math.ceil(totalUsersCount / contentLimit),
+    },
+  };
 };
 const getAllProperties = async () => {};
 const getAllRentalsReq = async () => {

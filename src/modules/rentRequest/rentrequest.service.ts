@@ -102,7 +102,24 @@ const getAllMyRents = async (query: PaginationOptions, tenantId: string) => {
     },
   });
 
-  return allRents;
+  const totalRentsCount = await prisma.payment.count({
+    where: {
+      rentRequest: {
+        tenantId,
+      },
+      status: "PAID",
+    },
+  });
+
+  return {
+    data: allRents,
+    meta: {
+      total: totalRentsCount,
+      limit: contentLimit,
+      page: pageNo,
+      totalPages: Math.ceil(totalRentsCount / contentLimit),
+    },
+  };
 };
 
 export const rentRequestService = {

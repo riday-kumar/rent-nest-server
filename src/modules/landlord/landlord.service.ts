@@ -115,7 +115,23 @@ const allRentalRequest = async (
     throw new Error("No rental request found");
   }
 
-  return allRentalRequests;
+  const totalRentalRequestsCount = await prisma.rentRequest.count({
+    where: {
+      property: {
+        landlordId,
+      },
+    },
+  });
+
+  return {
+    data: allRentalRequests,
+    meta: {
+      total: totalRentalRequestsCount,
+      limit: contentLimit,
+      page: pageNo,
+      totalPages: Math.ceil(totalRentalRequestsCount / contentLimit),
+    },
+  };
 };
 const updateRequestByLandlord = async (
   reqId: string,
