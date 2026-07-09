@@ -75,14 +75,33 @@ const initiatePayment = async (payload: any) => {
     throw new Error("already paid");
   }
 
-  // create payment
-  await prisma.payment.create({
-    data: {
-      transactionId: tran_id,
+  const existingPayment = await prisma.payment.findUnique({
+    where: {
       rentRequestId: payload.reqId,
-      amount: Number(rentAmount),
     },
   });
+  // create payment
+
+  if (existingPayment) {
+    await prisma.payment.update({
+      where: {
+        id: existingPayment.id,
+      },
+      data: {
+        transactionId: tran_id,
+        status: "PENDING",
+      },
+    });
+  } else {
+    await prisma.payment.create({
+      data: {
+        transactionId: tran_id,
+        rentRequestId: payload.reqId,
+        amount: Number(rentAmount),
+        // status: "PENDING",
+      },
+    });
+  }
 
   const GatewayPageURL = data.GatewayPageURL;
 
