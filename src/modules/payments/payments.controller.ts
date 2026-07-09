@@ -60,7 +60,21 @@ const paymentHistory = catchAsync(
   },
 );
 const getPaymentDetail = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const paymentId = req?.params?.id as string;
+    const userId = req?.user.id;
+
+    const paymentDetails = await paymentService.getPaymentDetail(
+      paymentId,
+      userId,
+    );
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "Payment detail found successfully",
+      data: paymentDetails,
+    });
+  },
 );
 
 export const paymentController = {

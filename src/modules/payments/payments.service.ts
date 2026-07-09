@@ -154,6 +154,22 @@ const paymentHistory = async (userId: string) => {
         tenantId: userId,
       },
     },
+    omit: {
+      meta: true,
+    },
+  });
+
+  if (paymentHistory.length === 0) {
+    throw new Error("No payment history found");
+  }
+
+  return paymentHistory;
+};
+const getPaymentDetail = async (paymentId: string, userId: string) => {
+  const paymentDetails = await prisma.payment.findUnique({
+    where: {
+      id: paymentId,
+    },
     include: {
       rentRequest: {
         omit: {
@@ -166,13 +182,12 @@ const paymentHistory = async (userId: string) => {
     },
   });
 
-  if (paymentHistory.length === 0) {
-    throw new Error("No payment history found");
+  if (paymentDetails?.rentRequest.tenantId !== userId) {
+    throw new Error("This is not Your Payment detail");
   }
 
-  return paymentHistory;
+  return paymentDetails;
 };
-const getPaymentDetail = async () => {};
 
 export const paymentService = {
   initiatePayment,
