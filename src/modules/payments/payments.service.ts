@@ -95,6 +95,10 @@ const verifyPayment = async (
   status: string,
   payload: any,
 ) => {
+  if (!reqId || !tran_id || !status) {
+    throw new Error("Request ID, Transaction ID, and Status is required");
+  }
+
   const response = await axios.post(
     `https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?val_id=${payload.val_id}&store_id=${config.ssl_commerze_store_id}&store_passwd=${config.ssl_commerze_store_password}&format=json`,
     {

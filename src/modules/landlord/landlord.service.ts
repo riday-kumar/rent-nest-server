@@ -7,6 +7,22 @@ import { PaginationOptions } from "../../interfaces/common";
 import { prisma } from "../../lib/prisma";
 
 const createProperty = async (landlordId: string, payload: Property) => {
+  const { title, address, city, district, size, images, amenities } = payload;
+
+  if (
+    !title?.trim() ||
+    !address?.trim() ||
+    !city?.trim() ||
+    !district?.trim() ||
+    !size ||
+    !images ||
+    !amenities
+  ) {
+    throw new Error(
+      "Title, address, city, district, size, images and amenities are required",
+    );
+  }
+
   const property = await prisma.property.create({
     data: {
       ...payload,

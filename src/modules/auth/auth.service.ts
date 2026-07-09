@@ -10,6 +10,11 @@ const registerUser = async (
   payload: Pick<User, "name" | "email" | "password" | "role">,
 ) => {
   const { name, email, password, role } = payload;
+
+  if (!name?.trim() || !email?.trim() || !password?.trim()) {
+    throw new Error("Name, Email, and Password is required");
+  }
+
   const saltRound = Number(config.salt_round);
   const hashPassword = await bcrypt.hash(password, saltRound);
 
@@ -30,6 +35,9 @@ const registerUser = async (
 
 const loginUserIntoDB = async (payload: Pick<User, "email" | "password">) => {
   const { email, password } = payload;
+  if (!email?.trim() || !password?.trim()) {
+    throw new Error("Email and Password is required");
+  }
 
   const user = await prisma.user.findUnique({
     where: {

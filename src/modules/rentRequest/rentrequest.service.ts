@@ -3,6 +3,10 @@ import { prisma } from "../../lib/prisma";
 import { IRentRequest, IRequestDetail } from "./rentrequest.interface";
 
 const createRentRequest = async (payload: IRentRequest) => {
+  if (!payload.propertyId || !payload.tenantId) {
+    throw new Error("Property ID and Tenant ID are required");
+  }
+
   // check property is available or not
   const currentProperty = await prisma.property.findUnique({
     where: {
@@ -33,6 +37,10 @@ const createRentRequest = async (payload: IRentRequest) => {
   return rentRequest;
 };
 const getAllRentRequests = async (tenantId: string) => {
+  if (!tenantId) {
+    throw new Error("Tenant ID is required");
+  }
+
   const allRequests = await prisma.rentRequest.findMany({
     where: {
       tenantId,
@@ -68,6 +76,10 @@ const getRentRequestDetail = async (payload: IRequestDetail) => {
 
 const getAllMyRents = async (query: PaginationOptions, tenantId: string) => {
   const { limit, page, sortBy, sortOrder } = query;
+
+  if (!tenantId) {
+    throw new Error("Tenant ID is required");
+  }
 
   const contentLimit = limit ? Number(limit) : 8;
   const pageNo = page ? Number(page) : 1;

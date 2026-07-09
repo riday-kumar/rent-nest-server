@@ -102,6 +102,10 @@ const allProperties = async (query: IPropQuery) => {
   };
 };
 const propertyDetail = async (id: string) => {
+  if (!id) {
+    throw new Error("Property ID is required");
+  }
+
   const property = await prisma.property.findUnique({
     where: {
       id,

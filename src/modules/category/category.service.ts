@@ -4,7 +4,12 @@ const getAllCategories = async () => {
   const categories = await prisma.category.findMany();
   return categories;
 };
+
 const createCategory = async (categoryName: string) => {
+  if (!categoryName?.trim()) {
+    throw new Error("Category Name is required");
+  }
+
   const category = await prisma.category.create({
     data: {
       categoryName,
@@ -24,6 +29,9 @@ const updateCategory = async (categoryId: number, categoryName: string) => {
   return updateCategory;
 };
 const deleteCategory = async (categoryId: number) => {
+  if (!categoryId) {
+    throw new Error("Category ID is required");
+  }
   await prisma.category.delete({
     where: {
       id: categoryId,
