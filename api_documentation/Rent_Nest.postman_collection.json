@@ -25,11 +25,15 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/auth/register",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "auth", "register"]
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
             }
           },
           "response": []
@@ -41,7 +45,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"landlord1@mail.com\",\r\n    \"password\": \"12345\"\r\n}",
+              "raw": "{\r\n    \"email\": \"hridoy@mail.com\",\r\n    \"password\": \"12345\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -49,11 +53,15 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/auth/login",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "auth", "login"]
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
             }
           },
           "response": []
@@ -68,11 +76,15 @@
               "raw": "{\r\n    \"email\": \"test2@mail.com\",\r\n    \"password\": \"12345\"\r\n}"
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/auth/refresh-token",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "auth", "refresh-token"]
+              "raw": "{{baseUrl}}/api/auth/refresh-token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "refresh-token"
+              ]
             }
           },
           "response": []
@@ -90,11 +102,15 @@
               "raw": "{\r\n    \"email\": \"test2@mail.com\",\r\n    \"password\": \"12345\"\r\n}"
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/auth/me",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "auth", "me"]
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
             }
           },
           "response": []
@@ -119,11 +135,15 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/category/create-category",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "category", "create-category"]
+              "raw": "{{baseUrl}}/api/category/create-category",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "category",
+                "create-category"
+              ]
             }
           },
           "response": []
@@ -134,11 +154,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/category/all-categories",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "category", "all-categories"]
+              "raw": "{{baseUrl}}/api/category/all-categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "category",
+                "all-categories"
+              ]
             }
           },
           "response": []
@@ -158,11 +182,16 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/category/update-category/",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "category", "update-category", ""]
+              "raw": "{{baseUrl}}/api/category/update-category/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "category",
+                "update-category",
+                ""
+              ]
             }
           },
           "response": []
@@ -173,11 +202,16 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/category/delete-category/",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "category", "delete-category", ""]
+              "raw": "{{baseUrl}}/api/category/delete-category/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "category",
+                "delete-category",
+                ""
+              ]
             }
           },
           "response": []
@@ -202,11 +236,15 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/landlord/properties",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "landlord", "properties"]
+              "raw": "{{baseUrl}}/api/landlord/properties",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "landlord",
+                "properties"
+              ]
             }
           },
           "response": []
@@ -226,10 +264,10 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/landlord/properties/7401973a-f514-4821-80a4-085e2ffd4a64",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
+              "raw": "{{baseUrl}}/api/landlord/properties/7401973a-f514-4821-80a4-085e2ffd4a64",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "landlord",
@@ -246,10 +284,10 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/landlord/properties/e624fd5a-b528-4165-96e8-21e0124da086",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
+              "raw": "{{baseUrl}}/api/landlord/properties/e624fd5a-b528-4165-96e8-21e0124da086",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "landlord",
@@ -266,11 +304,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/landlord/requests",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "landlord", "requests"],
+              "raw": "{{baseUrl}}/api/landlord/requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "landlord",
+                "requests"
+              ],
               "query": [
                 {
                   "key": "limit",
@@ -316,10 +358,10 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/landlord/requests/8656b5e0-56b1-4731-bb70-ad895c01442e",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
+              "raw": "{{baseUrl}}/api/landlord/requests/8656b5e0-56b1-4731-bb70-ad895c01442e",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "landlord",
@@ -341,11 +383,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/admin/users",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "admin", "users"]
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
             }
           },
           "response": []
@@ -356,11 +402,16 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/admin/users/01KWXN8BPR97CMYZ843JCG6FDX",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "admin", "users", "01KWXN8BPR97CMYZ843JCG6FDX"]
+              "raw": "{{baseUrl}}/api/admin/users/01KWXN8BPR97CMYZ843JCG6FDX",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "01KWXN8BPR97CMYZ843JCG6FDX"
+              ]
             }
           },
           "response": []
@@ -371,11 +422,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/admin/rentals",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "admin", "rentals"]
+              "raw": "{{baseUrl}}/api/admin/rentals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "rentals"
+              ]
             }
           },
           "response": []
@@ -391,11 +446,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/properties",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "properties"],
+              "raw": "{{baseUrl}}/api/properties",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "properties"
+              ],
               "query": [
                 {
                   "key": "location",
@@ -456,10 +514,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/properties/8ae43abe-4750-44eb-9fcd-4268acbab29b",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
+              "raw": "{{baseUrl}}/api/properties/8ae43abe-4750-44eb-9fcd-4268acbab29b",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "properties",
@@ -480,11 +538,14 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/rentals?propertyId=7a3463e6-e426-4a89-b999-e8836e576995",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "rentals"],
+              "raw": "{{baseUrl}}/api/rentals?propertyId=7a3463e6-e426-4a89-b999-e8836e576995",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rentals"
+              ],
               "query": [
                 {
                   "key": "propertyId",
@@ -501,11 +562,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/rentals",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "rentals"]
+              "raw": "{{baseUrl}}/api/rentals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rentals"
+              ]
             }
           },
           "response": []
@@ -516,11 +580,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/rentals/8656b5e0-56b1-4731-bb70-ad895c01442e",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "rentals", "8656b5e0-56b1-4731-bb70-ad895c01442e"]
+              "raw": "{{baseUrl}}/api/rentals/8656b5e0-56b1-4731-bb70-ad895c01442e",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rentals",
+                "8656b5e0-56b1-4731-bb70-ad895c01442e"
+              ]
             }
           },
           "response": []
@@ -531,11 +599,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/rentals/my-rents",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "rentals", "my-rents"]
+              "raw": "{{baseUrl}}/api/rentals/my-rents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rentals",
+                "my-rents"
+              ]
             }
           },
           "response": []
@@ -560,11 +632,15 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/payments/create",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "payments", "create"]
+              "raw": "{{baseUrl}}/api/payments/create",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "create"
+              ]
             }
           },
           "response": []
@@ -575,11 +651,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/payments",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "payments"]
+              "raw": "{{baseUrl}}/api/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments"
+              ]
             }
           },
           "response": []
@@ -590,10 +669,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/payments/e766ac27-c59a-4da9-af0a-68a4a0b56b14",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
+              "raw": "{{baseUrl}}/api/payments/e766ac27-c59a-4da9-af0a-68a4a0b56b14",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "payments",
@@ -623,11 +702,14 @@
               }
             },
             "url": {
-              "raw": "https://rent-nest-b7-a4.vercel.app/api/reviews",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "reviews"]
+              "raw": "{{baseUrl}}/api/reviews",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reviews"
+              ]
             }
           },
           "response": []
