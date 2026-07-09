@@ -65,8 +65,32 @@ const getRentRequestDetail = async (payload: IRequestDetail) => {
   return request;
 };
 
+const getAllMyRents = async (tenantId: string) => {
+  const allRents = await prisma.payment.findMany({
+    where: {
+      rentRequest: {
+        tenantId,
+      },
+      status: "PAID",
+    },
+    select: {
+      id: true,
+      amount: true,
+      status: true,
+      rentRequest: {
+        select: {
+          property: true,
+        },
+      },
+    },
+  });
+
+  return allRents;
+};
+
 export const rentRequestService = {
   createRentRequest,
   getAllRentRequests,
   getRentRequestDetail,
+  getAllMyRents,
 };

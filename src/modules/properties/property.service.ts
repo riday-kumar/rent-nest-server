@@ -50,6 +50,10 @@ const allProperties = async (location: string, price: number, type: number) => {
       },
     },
   });
+
+  if (properties.length === 0) {
+    throw new Error("Property is not available");
+  }
   return properties;
 };
 const propertyDetail = async (id: string) => {

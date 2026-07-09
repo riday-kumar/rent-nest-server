@@ -50,8 +50,22 @@ const getRentRequestDetail = catchAsync(
   },
 );
 
+const getAllMyRents = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const tenantId = req?.user?.id as string;
+    const allRents = await rentRequestService.getAllMyRents(tenantId);
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "All Rents Fetched",
+      data: allRents,
+    });
+  },
+);
+
 export const rentRequestController = {
   createRentRequest,
   getAllRentRequests,
   getRentRequestDetail,
+  getAllMyRents,
 };

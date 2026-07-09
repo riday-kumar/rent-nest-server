@@ -5,6 +5,8 @@ import { auth } from "../../middlewares/auth";
 const route = Router();
 // create rental request
 route.post("/", auth("TENANT"), rentRequestController.createRentRequest);
+// get tenant's all rented property
+route.get("/my-rents", auth("TENANT"), rentRequestController.getAllMyRents);
 // get tenant's rental requests
 route.get("/", auth("TENANT"), rentRequestController.getAllRentRequests);
 // get rental request detail
