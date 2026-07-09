@@ -1,3 +1,4 @@
+import { PaginationOptions } from "../../interfaces/common";
 import { prisma } from "../../lib/prisma";
 import { IRentRequest, IRequestDetail } from "./rentrequest.interface";
 
@@ -65,7 +66,16 @@ const getRentRequestDetail = async (payload: IRequestDetail) => {
   return request;
 };
 
-const getAllMyRents = async (tenantId: string) => {
+const getAllMyRents = async (query: PaginationOptions, tenantId: string) => {
+  const { limit, page, sortBy, sortOrder } = query;
+
+  const contentLimit = limit ? Number(limit) : 8;
+  const pageNo = page ? Number(page) : 1;
+  const skip = (pageNo - 1) * contentLimit;
+
+  const sortedBy = sortBy ? sortBy : "createdAt";
+  const sortedOrder = sortOrder ? sortOrder : "desc";
+
   const allRents = await prisma.payment.findMany({
     where: {
       rentRequest: {
@@ -73,6 +83,7 @@ const getAllMyRents = async (tenantId: string) => {
       },
       status: "PAID",
     },
+
     select: {
       id: true,
       amount: true,
@@ -82,6 +93,12 @@ const getAllMyRents = async (tenantId: string) => {
           property: true,
         },
       },
+    },
+    // pagination
+    take: contentLimit,
+    skip: skip,
+    orderBy: {
+      [sortedBy]: sortedOrder,
     },
   });
 

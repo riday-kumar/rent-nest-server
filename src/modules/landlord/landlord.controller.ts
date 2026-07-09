@@ -56,8 +56,10 @@ const deleteProperty = catchAsync(
 const allRentalRequest = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const landlordId = req?.user?.id;
+
     const allRentalRequests = await landlordService.allRentalRequest(
-      landlordId as string,
+      req.query,
+      landlordId,
     );
     sendResponse(res, {
       success: true,

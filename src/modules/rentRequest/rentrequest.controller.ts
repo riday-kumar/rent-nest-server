@@ -53,7 +53,10 @@ const getRentRequestDetail = catchAsync(
 const getAllMyRents = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tenantId = req?.user?.id as string;
-    const allRents = await rentRequestService.getAllMyRents(tenantId);
+    const allRents = await rentRequestService.getAllMyRents(
+      req.query,
+      tenantId,
+    );
     sendResponse(res, {
       success: true,
       statusCode: status.OK,

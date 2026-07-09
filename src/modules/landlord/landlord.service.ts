@@ -3,6 +3,7 @@ import {
   RentRequestStatus,
   ROLE,
 } from "../../../generated/prisma/client";
+import { PaginationOptions } from "../../interfaces/common";
 import { prisma } from "../../lib/prisma";
 
 const createProperty = async (landlordId: string, payload: Property) => {
@@ -74,12 +75,30 @@ const deleteProperty = async (propertyId: string, userId: string) => {
   });
   return deleteProperty;
 };
-const allRentalRequest = async (landlordId: string) => {
+const allRentalRequest = async (
+  query: PaginationOptions,
+  landlordId: string,
+) => {
+  const { limit, page, sortBy, sortOrder } = query;
+
+  const contentLimit = limit ? Number(limit) : 8;
+  const pageNo = page ? Number(page) : 1;
+  const skip = (pageNo - 1) * contentLimit;
+
+  const sortedBy = sortBy ? sortBy : "createdAt";
+  const sortedOrder = sortOrder ? sortOrder : "desc";
+
   const allRentalRequests = await prisma.rentRequest.findMany({
     where: {
       property: {
         landlordId,
       },
+    },
+    // pagination
+    take: contentLimit,
+    skip: skip,
+    orderBy: {
+      [sortedBy]: sortedOrder,
     },
     include: {
       tenant: {

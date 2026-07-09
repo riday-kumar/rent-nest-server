@@ -7,14 +7,8 @@ import status from "http-status";
 const getAllProperties = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // console.log(req.query);
-    const location = req?.query?.location as string;
-    const price = Number(req?.query?.price);
-    const type = Number(req?.query?.type);
-    const properties = await propertyService.allProperties(
-      location,
-      price,
-      type,
-    );
+
+    const properties = await propertyService.allProperties(req.query);
 
     sendResponse(res, {
       success: true,

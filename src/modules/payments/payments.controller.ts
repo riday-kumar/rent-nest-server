@@ -49,7 +49,10 @@ const verifyPayment = catchAsync(
 const paymentHistory = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req?.user.id;
-    const paymentHistory = await paymentService.paymentHistory(userId);
+    const paymentHistory = await paymentService.paymentHistory(
+      req.query,
+      userId,
+    );
 
     sendResponse(res, {
       success: true,

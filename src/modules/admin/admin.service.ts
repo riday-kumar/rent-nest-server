@@ -1,9 +1,25 @@
+import { PaginationOptions } from "../../interfaces/common";
 import { prisma } from "../../lib/prisma";
 
-const getAllUsers = async () => {
+const getAllUsers = async (query: PaginationOptions) => {
+  const { limit, page, sortBy, sortOrder } = query;
+
+  const contentLimit = limit ? Number(limit) : 8;
+  const pageNo = page ? Number(page) : 1;
+  const skip = (pageNo - 1) * contentLimit;
+
+  const sortedBy = sortBy ? sortBy : "createdAt";
+  const sortedOrder = sortOrder ? sortOrder : "desc";
+
   const users = await prisma.user.findMany({
     omit: {
       password: true,
+    },
+    // pagination
+    take: contentLimit,
+    skip: skip,
+    orderBy: {
+      [sortedBy]: sortedOrder,
     },
   });
   return users;

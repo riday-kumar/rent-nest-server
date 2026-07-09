@@ -1,7 +1,19 @@
+import { PropertyStatus } from "../../../generated/prisma/enums";
 import { PropertyWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
+import { IPropQuery } from "./property.interface";
 
-const allProperties = async (location: string, price: number, type: number) => {
+const allProperties = async (query: IPropQuery) => {
+  const { location, price, type, propStatus, limit, page, sortBy, sortOrder } =
+    query;
+
+  const contentLimit = limit ? Number(limit) : 8;
+  const pageNo = page ? Number(page) : 1;
+  const skip = (pageNo - 1) * contentLimit;
+
+  const sortedBy = sortBy ? sortBy : "createdAt";
+  const sortedOrder = sortOrder ? sortOrder : "desc";
+
   const andCondition: PropertyWhereInput[] = [];
 
   if (location) {
@@ -32,20 +44,37 @@ const allProperties = async (location: string, price: number, type: number) => {
 
   if (type) {
     andCondition.push({
-      categoryId: type,
+      categoryId: Number(type),
+    });
+  }
+
+  if (propStatus) {
+    andCondition.push({
+      propertyStatus: propStatus as PropertyStatus,
     });
   }
 
   const properties = await prisma.property.findMany({
     where: {
       AND: andCondition,
-      propertyStatus: "AVAILABLE",
+      // propertyStatus: "AVAILABLE",
+    },
+    // pagination
+    take: contentLimit,
+    skip: skip,
+    orderBy: {
+      [sortedBy]: sortedOrder,
     },
     include: {
       category: {
         omit: {
           createdAt: true,
           updatedAt: true,
+        },
+      },
+      review: {
+        select: {
+          review: true,
         },
       },
     },
@@ -75,6 +104,11 @@ const propertyDetail = async (id: string) => {
           createdAt: true,
           updatedAt: true,
           isActive: true,
+        },
+      },
+      review: {
+        select: {
+          review: true,
         },
       },
     },

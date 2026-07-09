@@ -2,6 +2,7 @@ import { config } from "../../config";
 import { prisma } from "../../lib/prisma";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { PaginationOptions } from "../../interfaces/common";
 
 const initiatePayment = async (payload: any) => {
   if (!payload.reqId) {
@@ -147,7 +148,16 @@ const verifyPayment = async (
 
   return status;
 };
-const paymentHistory = async (userId: string) => {
+const paymentHistory = async (query: PaginationOptions, userId: string) => {
+  const { limit, page, sortBy, sortOrder } = query;
+
+  const contentLimit = limit ? Number(limit) : 8;
+  const pageNo = page ? Number(page) : 1;
+  const skip = (pageNo - 1) * contentLimit;
+
+  const sortedBy = sortBy ? sortBy : "createdAt";
+  const sortedOrder = sortOrder ? sortOrder : "desc";
+
   const paymentHistory = await prisma.payment.findMany({
     where: {
       rentRequest: {
@@ -156,6 +166,12 @@ const paymentHistory = async (userId: string) => {
     },
     omit: {
       meta: true,
+    },
+    // pagination
+    take: contentLimit,
+    skip: skip,
+    orderBy: {
+      [sortedBy]: sortedOrder,
     },
   });
 

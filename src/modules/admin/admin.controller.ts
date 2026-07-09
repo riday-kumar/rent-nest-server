@@ -6,7 +6,7 @@ import status from "http-status";
 
 const getAllUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const users = await adminService.getAllUsers();
+    const users = await adminService.getAllUsers(req.query);
     sendResponse(res, {
       success: true,
       statusCode: status.OK,
