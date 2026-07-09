@@ -147,7 +147,31 @@ const verifyPayment = async (
 
   return status;
 };
-const paymentHistory = async () => {};
+const paymentHistory = async (userId: string) => {
+  const paymentHistory = await prisma.payment.findMany({
+    where: {
+      rentRequest: {
+        tenantId: userId,
+      },
+    },
+    include: {
+      rentRequest: {
+        omit: {
+          id: true,
+        },
+        include: {
+          property: true,
+        },
+      },
+    },
+  });
+
+  if (paymentHistory.length === 0) {
+    throw new Error("No payment history found");
+  }
+
+  return paymentHistory;
+};
 const getPaymentDetail = async () => {};
 
 export const paymentService = {

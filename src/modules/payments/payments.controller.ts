@@ -47,7 +47,17 @@ const verifyPayment = catchAsync(
   },
 );
 const paymentHistory = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req?.user.id;
+    const paymentHistory = await paymentService.paymentHistory(userId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "Payment history found successfully",
+      data: paymentHistory,
+    });
+  },
 );
 const getPaymentDetail = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {},
