@@ -45,6 +45,26 @@ const getAllRentRequests = async (tenantId: string) => {
     where: {
       tenantId,
     },
+    include: {
+      payment: {
+        select: {
+          id: true,
+          status: true,
+        },
+      },
+      property: {
+        select: {
+          title: true,
+          city: true,
+          rentAmount: true,
+          review: {
+            where: {
+              tenantId,
+            },
+          },
+        },
+      },
+    },
   });
 
   if (allRequests.length === 0) {

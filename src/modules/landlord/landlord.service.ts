@@ -149,6 +149,21 @@ const allRentalRequest = async (
     },
   };
 };
+const allProperties = async (landlordId: string) => {
+  const allRentalRequests = await prisma.property.findMany({
+    where: {
+      landlordId,
+    },
+  });
+
+  if (allRentalRequests.length === 0) {
+    throw new Error("No rental request found");
+  }
+
+  return {
+    data: allRentalRequests,
+  };
+};
 const updateRequestByLandlord = async (
   reqId: string,
   status: RentRequestStatus,
@@ -216,5 +231,6 @@ export const landlordService = {
   updateProperty,
   deleteProperty,
   allRentalRequest,
+  allProperties,
   updateRequestByLandlord,
 };

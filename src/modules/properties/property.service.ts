@@ -77,6 +77,12 @@ const allProperties = async (query: IPropQuery) => {
           review: true,
         },
       },
+      landlord: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
     },
   });
 
@@ -127,8 +133,12 @@ const propertyDetail = async (id: string) => {
         },
       },
       review: {
-        select: {
-          review: true,
+        include: {
+          tenant: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
     },
