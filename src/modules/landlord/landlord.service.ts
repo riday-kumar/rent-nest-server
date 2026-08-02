@@ -150,18 +150,59 @@ const allRentalRequest = async (
   };
 };
 const allProperties = async (landlordId: string) => {
-  const allRentalRequests = await prisma.property.findMany({
+  const allPropertyLists = await prisma.property.findMany({
     where: {
       landlordId,
     },
   });
 
-  if (allRentalRequests.length === 0) {
-    throw new Error("No rental request found");
+  if (allPropertyLists.length === 0) {
+    throw new Error("No property found");
   }
 
   return {
-    data: allRentalRequests,
+    data: allPropertyLists,
+  };
+};
+const landlordDashboardInfo = async (landlordId: string) => {
+  const totalProperty = await prisma.property.findMany({
+    where: {
+      landlordId,
+    },
+  });
+
+  const totalActiveStatus = await prisma.property.count({
+    where: {
+      AND: {
+        landlordId: landlordId,
+        propertyStatus: "RENTED",
+      },
+    },
+  });
+
+  const totalEarnings = await prisma.property.aggregate({
+    _sum: {
+      rentAmount: true,
+    },
+    where: {
+      AND: {
+        landlordId: landlordId,
+        propertyStatus: "RENTED",
+      },
+    },
+  });
+
+  const numOfEarnings = totalEarnings._sum.rentAmount ?? 0;
+
+  const numOfProperty = totalProperty.length;
+  const numOfActiveStatus = totalActiveStatus;
+
+  return {
+    data: {
+      numOfProperty,
+      numOfActiveStatus,
+      numOfEarnings,
+    },
   };
 };
 const updateRequestByLandlord = async (
@@ -232,5 +273,6 @@ export const landlordService = {
   deleteProperty,
   allRentalRequest,
   allProperties,
+  landlordDashboardInfo,
   updateRequestByLandlord,
 };

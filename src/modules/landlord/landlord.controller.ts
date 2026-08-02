@@ -82,6 +82,20 @@ const allProperties = catchAsync(
     });
   },
 );
+const landlordDashboard = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const landlordId = req?.user?.id;
+
+    const landlordOverallDashboardInfo =
+      await landlordService.landlordDashboardInfo(landlordId);
+    sendResponse(res, {
+      success: true,
+      statusCode: status.OK,
+      message: "Landlord dashboard info retrieved successfully",
+      data: landlordOverallDashboardInfo,
+    });
+  },
+);
 
 const updateRequestByLandlord = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -109,5 +123,6 @@ export const landlordController = {
   deleteProperty,
   allRentalRequest,
   allProperties,
+  landlordDashboard,
   updateRequestByLandlord,
 };

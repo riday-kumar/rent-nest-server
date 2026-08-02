@@ -9,6 +9,11 @@ route.get(
   auth("LANDLORD"),
   landlordController.allProperties,
 );
+route.get(
+  "/landlord-dashboard",
+  auth("LANDLORD"),
+  landlordController.landlordDashboard,
+);
 route.post("/properties", auth("LANDLORD"), landlordController.createProperty);
 route.put(
   "/properties/:id",
