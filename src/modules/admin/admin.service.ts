@@ -58,6 +58,14 @@ const getAllRentalsReq = async () => {
   });
   return allRentalRequests;
 };
+const getAllPendingReq = async () => {
+  const allRentalRequests = await prisma.rentRequest.findMany({
+    where: {
+      rentStatus: "PENDING",
+    },
+  });
+  return allRentalRequests;
+};
 const updateUserStatus = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -86,4 +94,5 @@ export const adminService = {
   getAllProperties,
   getAllRentalsReq,
   updateUserStatus,
+  getAllPendingReq,
 };

@@ -187,6 +187,17 @@ const paymentHistory = async (query: PaginationOptions, userId: string) => {
         tenantId: userId,
       },
     },
+    include: {
+      rentRequest: {
+        include: {
+          property: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      },
+    },
     omit: {
       meta: true,
     },
